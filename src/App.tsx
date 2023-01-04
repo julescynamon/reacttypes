@@ -1,34 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import Nav from './components/nav';
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [bgClass, setBgClass] = useState('bg-pas-vegan');
+    const [regime, setRegime] = useState(2);
+    const [formule, setFormule] = useState(1);
+    const [facturation, setFacturation] = useState(0);
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    const handleRegimeClick = (index: number) => {
+        setRegime(index);
+        const bg = ['bg-vegan', 'bg-viandard-sensible', 'bg-pas-vegan'];
+        setBgClass(bg[index]);
+    };
+
+    const handleFormuleClick = (index: number) => {
+        setFormule(index);
+    };
+
+    const handleFacturationClick = (index: number) => {
+        setFacturation(index);
+    };
+
+    return (
+        <div className="">
+            <header className={bgClass}></header>
+            <nav>
+                <Nav
+                    className={`regime ${bgClass}`}
+                    data={['Vegan', 'Viendard sensible', 'Véquoi?']}
+                    onClick={handleRegimeClick}
+                    selected={regime}
+                />
+                <Nav
+                    className={`formule ${bgClass}`}
+                    data={['Petite faim', 'Grosse dalle']}
+                    onClick={handleFormuleClick}
+                    selected={formule}
+                />
+            </nav>
+            <section className={bgClass}></section>
+            <footer>
+                <Nav
+                    className={`facturation ${bgClass}`}
+                    data={[
+                        'Abonnés à inpulse.tv',
+                        'Pompiers et militaires',
+                        'Les autres',
+                    ]}
+                    onClick={handleFacturationClick}
+                    selected={facturation}
+                />
+                <Nav className={`commande ${bgClass}`} data={['Commander']} />
+            </footer>
+        </div>
+    );
 }
 
-export default App
+export default App;
